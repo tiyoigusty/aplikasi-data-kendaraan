@@ -24,7 +24,7 @@ public class MotorcycleService {
         validationService.validate(request);
 
         if(motorcycleRepo.existsById(request.getRegistration())) {
-            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "Registration already registered!");
+            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nomor Registrasi sudah terdaftar!");
         }
 
         Motorcycle newData = new Motorcycle();

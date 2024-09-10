@@ -1,13 +1,15 @@
+// INDEX HTML
+
 let deleteId = null;
 let detailId = null;
 
 // Function to fetch data from backend
 function fetchData() {
   $.ajax({
-    url: "http://localhost:8080/api/motorcycles", // Ganti URL sesuai dengan alamat backend Anda
+    url: "http://localhost:8080/api/motorcycles",
     type: "GET",
     success: function (response) {
-      const motorcycles = response.data.content; // Sesuaikan dengan struktur respons API Anda
+      const motorcycles = response.data.content;
       renderData(motorcycles);
       console.log(motorcycles);
     },
@@ -33,9 +35,9 @@ function renderData(data) {
             <td>${item.color}</td>
             <td>${item.fuel}</td>
             <td>
-                <a href="#" class="btn-detail" data-id="${item.registration}">Detail</a> |
-                <a href="./update-data.html?id=${item.registration}" class="btn-edit">Edit</a> |
-                <a href="#" class="btn-delete" data-id="${item.registration}">Delete</a>
+                <a href="#" class="btn-detail text-primary" data-id="${item.registration}">Detail</a> |
+                <a href="./update-data.html?id=${item.registration}" class="btn-edit text-warning">Edit</a> |
+                <a href="#" class="btn-delete text-danger" data-id="${item.registration}">Delete</a>
             </td>
         </tr>
     `;
@@ -65,7 +67,7 @@ $(document).ready(function () {
         owner: owner
       },
       success: function (response) {
-        const motorcycles = response.data; // Sesuaikan dengan struktur respons API Anda
+        const motorcycles = response.data;
         renderData(motorcycles);
       },
       error: function (error) {
@@ -87,7 +89,7 @@ $(document).ready(function () {
         type: "DELETE",
         success: function () {
           $('#deleteModal').modal('hide');
-//          alert("Data deleted successfully.");
+          toastr.success('Data berhasil dihapus!');
           fetchData(); // Refresh data
         },
         error: function (error) {
@@ -105,15 +107,15 @@ $(document).ready(function () {
       success: function (response) {
         const motorcycle = response.data;
         const detailContent = `
-          <p><strong>No Registrasi:</strong> ${motorcycle.registration}</p>
-          <p><strong>Nama Pemilik:</strong> ${motorcycle.owner}</p>
-          <p><strong>Merek Kendaraan:</strong> ${motorcycle.brand}</p>
-          <p><strong>Tahun Pembuatan:</strong> ${motorcycle.year}</p>
-          <p><strong>Kapasitas:</strong> ${motorcycle.size} cc</p>
-          <p><strong>Warna:</strong> ${motorcycle.color}</p>
-          <p><strong>Bahan Bakar:</strong> ${motorcycle.fuel}</p>
-          <p><strong>Alamat:</strong> ${motorcycle.address}</p>
-        `;
+            <div class="detail-row"><strong>No Registrasi</strong><span><strong>: </strong>${motorcycle.registration}</span></div>
+            <div class="detail-row"><strong>Nama Pemilik</strong><span><strong>: </strong>${motorcycle.owner}</span></div>
+            <div class="detail-row"><strong>Merek Kendaraan</strong><span><strong>: </strong>${motorcycle.brand}</span></div>
+            <div class="detail-row"><strong>Tahun Pembuatan</strong><span><strong>: </strong>${motorcycle.year}</span></div>
+            <div class="detail-row"><strong>Kapasitas</strong><span><strong>: </strong>${motorcycle.size} cc</span></div>
+            <div class="detail-row"><strong>Warna</strong><span><strong>: </strong>${motorcycle.color}</span></div>
+            <div class="detail-row"><strong>Bahan Bakar</strong><span><strong>: </strong>${motorcycle.fuel}</span></div>
+            <div class="detail-row"><strong>Alamat</strong><span><strong>: </strong>${motorcycle.address}</span></div>
+          `;
         $('#detailBody').html(detailContent);
         $('#detailModal').modal('show');
       },

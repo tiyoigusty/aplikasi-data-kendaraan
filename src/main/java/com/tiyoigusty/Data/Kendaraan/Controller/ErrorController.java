@@ -24,10 +24,10 @@ public class ErrorController {
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
+        // Return the errors as a structured map
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(WebResponse.<Map<String, String>>builder().errors(errors.toString()).build());
     }
-
 
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<WebResponse<String>> apiException(ResponseStatusException exception) {
